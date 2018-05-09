@@ -1,6 +1,8 @@
-\documentclass{article}
+\documentclass[a4paper,landscape]{article}
 
 \usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{adjustbox}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{multirow}
@@ -15,83 +17,100 @@
 
 \newcommand\etal{\emph{et al.}}
 
-%\input{notation.tex}
+
+
+\usepackage{geometry}
+\geometry{
+	a4paper,
+%	total={170mm,257mm},
+	left=0mm,
+	top=0mm,
+	right=0mm,
+	bottom=0mm,
+}
+
+
 
 \begin{document}
-			
-	\begin{table}
-		%\centering
-		\begin{tabular}{|c|c|c|c|c|c|c|c|}
+		
+	
+	\begin{table}[h]
+		\centering
+		\resizebox{\textwidth}{!}{
+		\begin{tabular}{|l|c|c|c|c|}
 			\hline
-			 & Matching & Update & Exploration & Active Vision & Filtering & Recognition & Extraction \\
+			 & Reconstruction & Recognition & Map Management & Exploration \\
 			\hline
-			\cite{ulrich2000icra} &  &  &  &  &  & x &  \\ 
+			\cite{ulrich2000icra} &  & Classification &  &  \\ 
 			\hline 			 
-			\cite{swain1991ijcv} &  &  &  &  &  & x &  \\ 
+			\cite{torralba2003context} &  & Classification &  &   \\ 
 			\hline 			 
-			\cite{torralba2003context} &  &  &  &  &  & x &  \\ 
+			\cite{lisin2005cvpr} &  & Classification &  &   \\ 
 			\hline 			 
-			\cite{oliva2001ijcv} &  &  &  &  &  & x &  \\ 
+			\cite{viola2004ijcv} &  & Object Detection &  &   \\ 
 			\hline 			 
-			\cite{lisin2005cvpr} &  &  &  &  &  & x &  \\ 
+			\cite{dalal2005cvpr} &  & Object Detection &  & \\ 
 			\hline 			 
-			\cite{viola2004ijcv} &  &  &  &  &  & x &  \\ 
+			\cite{krizhevsky2012nipsjournal} &  & CNN &  & \\ 
 			\hline 			 
-			\cite{papageorgiou1998iccv} &  &  &  &  &  & x &  \\ 
+			\cite{redmon2016cvpr,erhan2014cvpr,liu2016eccv} &  & CNN &  &  \\ 
 			\hline 			 
-			\cite{freund1997jcss} &  &  &  &  &  & x &  \\ 
+			\cite{long2015cvpr} &  & CNN &  &  \\ 
 			\hline 			 
-			\cite{dalal2005cvpr} &  &  &  &  &  & x &  \\ 
+			\cite{simonyan2014very,szegedy2015cvpr} &  & CNN &  &  \\ 
 			\hline 			 
-			\cite{krizhevsky2012nipsjournal} &  &  &  &  &  & x &  \\ 
+			\cite{stuckler2012iros} & Volumetric SLAM & 2D RDF & Bayesian Update + CRF &  \\ 
 			\hline 			 
-			\cite{redmon2016cvpr,erhan2014cvpr,liu2016eccv} &  &  &  &  &  & x &  \\ 
+			\cite{hermans2014dense} & 3D SLAM & 2D RDF & Bayesian Update + CRF & \\ 
 			\hline 			 
-			\cite{long2015cvpr} &  &  &  &  &  & x &  \\ 
+			\cite{mccormac2017semanticfusion} & 3D SLAM & CNN & Bayesian Update + CRF & \\ 
+			\hline
+			\cite{koppula2011nips} & 3D SLAM & CRF & & \\ 
 			\hline 			 
-			\cite{simonyan2014very,szegedy2015cvpr} &  &  &  &  &  & x &  \\ 
+			\cite{valentin2013cvpr} & 3D SLAM + Meshing & CRF & & \\ 
 			\hline 			 
-			\cite{de2017cvpr} & x & x &  &  &  & x &  \\ 
+			\cite{kunze2014iros} &  & 3D Object Recognition + Spatial Reasoning & & \\ 
 			\hline 			 
-			\cite{stuckler2012iros} & x & x &  &  &  & x &  \\ 
+			\cite{ciocarlie2014towards} & & Scene Segmentation + Object Recognition &  &   \\ 
 			\hline 			 
-			\cite{herbst2014icra} & x & x &  &  &  & x &  \\ 
+			\cite{herbst2014icra} & 3D SLAM & Change Detection &  &   \\ 
 			\hline 			 
-			\cite{vineet2015icra} & x & x &  &  &  & x &  \\ 
+			\cite{vineet2015icra} & Volumetric SLAM (TSDF) & 2D RDF & CRF &    \\ 
 			\hline 			 
-			\cite{zender2008ras} & x & x &  &  &  & x &  \\ 
+			\cite{zender2008ras} & 2D SLAM + Topological Mapping & Place Information, 2D Object Recognition & Incremental &  \\ 
 			\hline 			 
-			\cite{nuchter2008ras} & x & x &  &  &  & x &  \\ 
+			\cite{nuchter2008ras} & 3D SLAM & Scene Labeling + Object Recognition &  &   \\ 
 			\hline 			 
-			\cite{xiong2010bmvc} & x & x &  &  &  & x &  \\ 
+			\cite{xiong2010bmvc} &  & Scene Labeling &  &   \\ 
 			\hline 			 
-			\cite{blaha2016cvpr} & x & x &  &  &  & x &  \\ 
+			\cite{blaha2016cvpr} & Structure-From-Motion + Volumetric Reconstruction & Image Segmentation &  &  \\ 
 			\hline 			 
-			\cite{kundu2014eccv} & x & x &  &  &  & x &  \\ 
+			\cite{kundu2014eccv} & Structure-From-Motion + Volumetric Reconstruction & CRF &  &   \\ 
 			\hline 			 
-			\cite{sengupta2013icra} & x & x &  &  &  & x &  \\ 
+			\cite{sengupta2013icra} &  &  &  &   \\ 
 			\hline 			 
-			\cite{hane2013cvpr} & x & x &  &  &  & x &  \\ 
+			\cite{hane2013cvpr} & Structure-From-Motion + Volumetric Reconstruction & Image Segmentation &  &   \\ 
 			\hline 			 
-			\cite{yamauchi1997cira,yamauchi1998frontier,wang2011frontier} &  &  & x &  &  &  &  \\ 
+			\cite{yamauchi1997cira,yamauchi1998frontier,wang2011frontier} &  &  &  &  frontier-based  \\ 
 			\hline 			 
-			\cite{senarathne2013efficient,keidar2012robot} &  &  & x &  &  &  &  \\ 
+			\cite{senarathne2013efficient,keidar2012robot} &  &  &  &  frontier-based  \\ 
 			\hline 			 
-			\cite{oriolo2004icra,freda2005icra} &  &  & x &  &  &  &  \\ 
+			\cite{oriolo2004icra,freda2005icra} &  &  &  & SRT \\ 
 			\hline 			 
-			\cite{lavalle1998rapidly} &  &  & x &  &  &  &  \\ 
+			\cite{lavalle1998rapidly} &  &  &  &  RRT \\ 
+			\hline 			
+			\cite{bircher2016icra} & & &  &  RRT  \\ 
 			\hline 			 
-			\cite{bircher2016icra} & & & x &  &  &  &  \\ 
-			\hline 			 
-			\cite{el2013improved,franchi2009sensor} &  &  & x &  &  &  &  \\ 
+			\cite{el2013improved,franchi2009sensor} &  &  &  &  SRT \\ 
 			\hline 			 
 		\end{tabular}
-		\caption{Data association.}
-		\label{tab:assoc}
+		}
+		\caption{Survey.}
+		\label{tab:survey}
 	\end{table}
 	
 	\clearpage
 	\bibliography{references}
-	\bibliographystyle{plain}
+	\bibliographystyle{apalike}
 	
 \end{document}
