@@ -1,0 +1,142 @@
+\documentclass{article}
+%\documentclass[a4paper,landscape]{article}
+
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{adjustbox}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{multirow}
+
+%% Key definitions for text elements. USE THEM
+\def\secref#1{Sec.~\ref{#1}}
+\def\figref#1{Fig.~\ref{#1}}
+\def\tabref#1{Tab.~\ref{#1}}
+\def\eqref#1{Eq.~(\ref{#1})}
+\def\algref#1{Alg.~\ref{#1}}
+\def\appref#1{App.~\ref{#1}}
+
+\newcommand\etal{\emph{et al.}}
+
+\usepackage{rotating}
+
+
+
+%\usepackage{geometry}
+%\geometry{
+%	a4paper,
+%%	total={170mm,257mm},
+%	left=0mm,
+%	top=0mm,
+%	right=0mm,
+%	bottom=0mm,
+%}
+
+
+
+\begin{document}
+	
+
+	\section{Motivation}
+	
+	Traditional mapping techniques return a geometric model of the environment that can be used by the robot for computing distances to obstacles or finding path to a goal.
+	
+	Manipulation and navigation tasks may require human level knowledge (e.g., objects/places categories, functions, properties, and so on) to be accomplished.
+	
+	By extracting semantic information from sensory data it's possible to fullfill this requirement.
+	
+	\section{Definition}
+		
+	Semantic mapping:
+		
+	\begin{itemize}
+		\item the problem of building a model of the environment that allows to share knowledge between humans and robots.
+		\item the function of providing the robot with a representation of the environment for the completion of its tasks.
+		\item a core component of many robotic applications.
+	\end{itemize}
+		
+	\section{Building a semantic representation of the environment}
+	
+	The process of semantic mapping consists in integrating sensor measurements in the robot internal representation of the environment.
+	
+	The output of visual and range sensors is processed to extract meaningful information for recovering the structure and objects/places categories of the scene.
+		
+	This information is consecutively used to update the current robot belief about the state of the environment.
+	
+	\section{System Overview}
+	
+	\section{Perception}
+	
+	\begin{itemize}
+		\item serial
+		\item parallel
+	\end{itemize}
+	
+	\section{Recognition}
+	
+	\begin{itemize}
+		\item image classification
+		\item object detection
+		\item image segmentation
+		\item scene labeling
+		\item 3d object recognition
+		\item 3d object detection
+	\end{itemize}
+	
+	\section{Reconstruction}
+	
+	\begin{itemize}
+		\item metric
+		\item topological
+		\item hybrid
+	\end{itemize}
+	
+	\section{Map Management}
+	
+	\begin{itemize}
+		\item offline
+		\item frame-by-frame
+	\end{itemize}
+	
+	\section{Matching}
+	
+	\begin{itemize}
+		\item ...
+	\end{itemize}
+
+	\section{Symbol Grounding}
+	
+	\begin{itemize}
+		\item context aware
+		\item bayesian
+		\item local
+	\end{itemize}
+	
+	\section{Action}
+	
+	\begin{itemize}
+		\item ...
+	\end{itemize}
+	
+	\section{Active Vision}
+	
+	\begin{itemize}
+		\item ...
+	\end{itemize}
+	
+	\section{Exploration}
+	
+	\begin{itemize}
+		\item ...
+	\end{itemize}
+		
+	\clearpage
+	
+	\input{survey}
+	
+	\clearpage
+	
+	\bibliography{references}
+	\bibliographystyle{apalike}
+	
+\end{document}

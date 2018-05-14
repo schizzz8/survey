@@ -1,6 +1,6 @@
 .PHONY : all latex bibtex pdf view clean distclean
 
-TARGET=survey
+TARGET=approaches
 SOURCE=$(TARGET).tex
 
 all:

@@ -1,40 +1,4 @@
-\documentclass[a4paper,landscape]{article}
-
-\usepackage{graphicx}
-\usepackage{tabularx}
-\usepackage{adjustbox}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{multirow}
-
-%% Key definitions for text elements. USE THEM
-\def\secref#1{Sec.~\ref{#1}}
-\def\figref#1{Fig.~\ref{#1}}
-\def\tabref#1{Tab.~\ref{#1}}
-\def\eqref#1{Eq.~(\ref{#1})}
-\def\algref#1{Alg.~\ref{#1}}
-\def\appref#1{App.~\ref{#1}}
-
-\newcommand\etal{\emph{et al.}}
-
-
-
-\usepackage{geometry}
-\geometry{
-	a4paper,
-%	total={170mm,257mm},
-	left=0mm,
-	top=0mm,
-	right=0mm,
-	bottom=0mm,
-}
-
-
-
-\begin{document}
-		
-	
-	\begin{table}[h]
+	\begin{sidewaystable}
 		\centering
 		\resizebox{\textwidth}{!}{
 		\begin{tabular}{|l|c|c|c|c|}
@@ -101,14 +65,7 @@
 			\hline 			 
 			\cite{el2013improved,franchi2009sensor} &  &  &  &  SRT \\ 
 			\hline 			 
-		\end{tabular}
-		}
+		\end{tabular}}
 		\caption{Survey.}
 		\label{tab:survey}
-	\end{table}
-	
-	\clearpage
-	\bibliography{references}
-	\bibliographystyle{apalike}
-	
-\end{document}
+	\end{sidewaystable}
