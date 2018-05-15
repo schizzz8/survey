@@ -1,69 +1,65 @@
 	\begin{sidewaystable}
 		\centering
 		\resizebox{\textwidth}{!}{
-		\begin{tabular}{|l|c|c|c|c|}
+		\begin{tabular}{|l|c|c|c|c|c|c|}
 			\hline
-			 & Reconstruction & Recognition & Map Management & Exploration \\
+			{\bf Approach} & {\bf Perception} & {\bf Reconstruction} & {\bf Recognition} & {\bf Map Management} & {\bf Symbol Grounding} & {\bf Exploration} \\
+			\hline 			 
+			\cite{lavalle1998rapidly} & Geometric Only & Metric &  &  &  & RRT \\ 
+			\hline 			 
+			\cite{freda2005icra} & Geometric Only & Metric &  &  &  & SRT \\ 
+			\hline 			 
+			\cite{zender2008ras} & Pipelined & Metric + Topological & Object Detection & frame-by-frame & bayesian & \\ 
+			\hline 			 
+			\cite{nuchter2008ras} & Pipelined & Metric & Scene Labeling + 3D Object Recognition & offline & local & \\ 
+			\hline 			 
+			\cite{rusu2008ras} & Pipelined & Metric & Scene Labeling + 3D Object Recognition &  offline & local & \\ 
+			\hline 			 
+			\cite{xiong2010bmvc} & Pipelined & single frame & Scene Labeling &  & context-aware & \\ 
+			\hline 			 
+			\cite{tenorth2010knowrob} & Pipelined & Metric & Scene Labeling + 3D Object Recognition & offline & local & \\ 
 			\hline
-			\cite{ulrich2000icra} &  & Classification &  &  \\ 
+			\cite{koppula2011nips} & Pipelined & Metric & Scene Labeling & offline & context-aware & \\ 
 			\hline 			 
-			\cite{torralba2003context} &  & Classification &  &   \\ 
+			\cite{wang2011frontier} & Geometric Only & Metric &  &  &  & frontier-based \\ 
 			\hline 			 
-			\cite{lisin2005cvpr} &  & Classification &  &   \\ 
+			\cite{stuckler2012iros} & Parallel & Metric & Semantic Segmentation & frame-by-frame & bayesian + context-aware & \\ 
 			\hline 			 
-			\cite{viola2004ijcv} &  & Object Detection &  &   \\ 
+			\cite{pronobis2012icra} & Parallel & Metric + Topological & Place Categorization + Object Detection & frame-by-frame & bayesian + context-aware & \\ 
 			\hline 			 
-			\cite{dalal2005cvpr} &  & Object Detection &  & \\ 
+			\cite{gunther2013iros} & Parallel & Metric & 3D Object Recognition & frame-by-frame & bayesian &  \\ 
 			\hline 			 
-			\cite{krizhevsky2012nipsjournal} &  & CNN &  & \\ 
+			\cite{valentin2013cvpr} & Pipelined & Metric & Scene Labeling & offline & context-aware & \\ 
 			\hline 			 
-			\cite{redmon2016cvpr,erhan2014cvpr,liu2016eccv} &  & CNN &  &  \\ 
+			\cite{senarathne2013efficient} & Geometric Only & Metric &  &  &  & frontier-based \\ 
 			\hline 			 
-			\cite{long2015cvpr} &  & CNN &  &  \\ 
+			\cite{hane2013cvpr} & Joint & Metric & Image Segmentation &  & context-aware & \\ 
 			\hline 			 
-			\cite{simonyan2014very,szegedy2015cvpr} &  & CNN &  &  \\ 
+			\cite{el2013improved} & Geometric Only & Metric &  &  &  & SRT \\ 
 			\hline 			 
-			\cite{stuckler2012iros} & Volumetric SLAM & 2D RDF & Bayesian Update + CRF &  \\ 
+			\cite{anand2013ijrr} & Pipelined & Metric & Scene Labeling & offline & local & \\ 
 			\hline 			 
-			\cite{hermans2014dense} & 3D SLAM & 2D RDF & Bayesian Update + CRF & \\ 
+			\cite{lin2013iccv} & Semantic Only & single frame & 3D Object Detection &  & local & \\ 
 			\hline 			 
-			\cite{mccormac2017semanticfusion} & 3D SLAM & CNN & Bayesian Update + CRF & \\ 
-			\hline
-			\cite{koppula2011nips} & 3D SLAM & CRF & & \\ 
+			\cite{hermans2014dense} & Parallel & Metric & Semantic Segmentation & frame-by-frame & bayesian + context-aware & \\ 
 			\hline 			 
-			\cite{valentin2013cvpr} & 3D SLAM + Meshing & CRF & & \\ 
+			\cite{kunze2014iros} & Semantic Only & single frame & 3D Object Recognition & & context-aware & \\ 
 			\hline 			 
-			\cite{kunze2014iros} &  & 3D Object Recognition + Spatial Reasoning & & \\ 
+			\cite{ciocarlie2014towards} & Semantic Only & single frame & Scene Labeling + 3D Object Recognition & & local &  \\ 
 			\hline 			 
-			\cite{ciocarlie2014towards} & & Scene Segmentation + Object Recognition &  &   \\ 
+			\cite{herbst2014icra} & Parallel & Metric & Change Detection & frame-by-frame & bayesian & \\ 
 			\hline 			 
-			\cite{herbst2014icra} & 3D SLAM & Change Detection &  &   \\ 
+			\cite{kundu2014eccv} & Joint & Metric & Scene Labeling &  & context-aware & \\ 
 			\hline 			 
-			\cite{vineet2015icra} & Volumetric SLAM (TSDF) & 2D RDF & CRF &    \\ 
+			\cite{vineet2015icra} & Parallel & Metric & Semantic Segmentation & frame-by-frame & context-aware &  \\ 
 			\hline 			 
-			\cite{zender2008ras} & 2D SLAM + Topological Mapping & Place Information, 2D Object Recognition & Incremental &  \\ 
-			\hline 			 
-			\cite{nuchter2008ras} & 3D SLAM & Scene Labeling + Object Recognition &  &   \\ 
-			\hline 			 
-			\cite{xiong2010bmvc} &  & Scene Labeling &  &   \\ 
-			\hline 			 
-			\cite{blaha2016cvpr} & Structure-From-Motion + Volumetric Reconstruction & Image Segmentation &  &  \\ 
-			\hline 			 
-			\cite{kundu2014eccv} & Structure-From-Motion + Volumetric Reconstruction & CRF &  &   \\ 
-			\hline 			 
-			\cite{hane2013cvpr} & Structure-From-Motion + Volumetric Reconstruction & Image Segmentation &  &   \\ 
-			\hline 			 
-			\cite{yamauchi1997cira,yamauchi1998frontier,wang2011frontier} &  &  &  &  frontier-based  \\ 
-			\hline 			 
-			\cite{senarathne2013efficient,keidar2012robot} &  &  &  &  frontier-based  \\ 
-			\hline 			 
-			\cite{oriolo2004icra,freda2005icra} &  &  &  & SRT \\ 
-			\hline 			 
-			\cite{lavalle1998rapidly} &  &  &  &  RRT \\ 
+			\cite{blaha2016cvpr} & Joint & Metric & Image Segmentation &  & context-aware & \\ 
 			\hline 			
-			\cite{bircher2016icra} & & &  &  RRT  \\ 
+			\cite{bircher2016icra} & Geometric Only & Metric & &  &  & RRT \\ 
 			\hline 			 
-			\cite{el2013improved,franchi2009sensor} &  &  &  &  SRT \\ 
+			\cite{ruiz2017building} & Parallel & Metric & 3D Object Recognition & frame-by-frame & bayesian + context-aware & \\ 
+			\hline 			 
+			\cite{mccormac2017semanticfusion} & Parallel & Metric & Semantic Segmentation & frame-by-frame & bayesian + context-aware & \\ 
 			\hline 			 
 		\end{tabular}}
 		\caption{Survey.}
