@@ -64,93 +64,27 @@
 		\item is a core component of many robotic applications.
 	\end{itemize}
 		
-	\subsection{Building a semantic representation of the environment}
+	\section{Building a semantic representation of the environment}
 	
-	\begin{itemize}
-		\item The process of semantic mapping consists in integrating sensor measurements in the robot internal representation of the environment.
-		\item The output of visual and range sensors is processed to extract meaningful information for recovering the structure and objects/places categories of the scene.
-		\item This information is consecutively used to update the current robot belief about the state of the environment.
-	\end{itemize}
-	
+	The process of semantic mapping consists in integrating sensor measurements in the robot internal representation of the environment.
+
+	\begin{description}
+		\item {\bf Perception:} the output of visual and range sensors is processed to extract meaningful information for recovering the structure and objects/places categories of the scene.
+		\item {\bf Mapping:} this information is consecutively used to update the current robot belief about the state of the environment.
+		\item {\bf Action:} a new pose for the robot is computed in order to improve its representation of the environment.
+	\end{description}
+
 	\begin{figure}[h]
 		\centering
 		\includegraphics[width=\linewidth]{pics/drawing-crop.pdf}
 		\caption{Semantic mapping system.}
 		\label{fig:pipeline}
 	\end{figure}
-	
-	\newpage
 		
-	\section{System Overview}
-			
-	A semantic map is a triple:
-	
-	\begin{equation}
-	\cSM = < \cR, \cM, \cP >,
-	\end{equation}
-	
-	\noindent
-	with:
-	
-	\begin{itemize}
-		\item $\cR$: reference system
-		\item $\cM$: metric information obtained from sensors
-		\item $\cP$: predicates compliant with basic concept hierarchy.
-	\end{itemize}
-	
-	\subsection{Global Reference System}	
-	
-	The reference system is used to express all the elements of the map in a single frame.
-	
-	\subsection{Metric Map}	
-	
-	The metric information $\cM$ of the semantic map can be seen as a collection of 3D geometric models:
-	
-	\begin{equation}
-	\cM = \{\bM_1 \cdots \bM_N\},
-	\end{equation}
-	
-	\noindent	
-	where each model $\bM_i$ is an entity defined by:
-	
-	\begin{itemize}
-		\item {\bf Pose3D}: $\bX = [ \bR | \bt] \in SE(3)$,
-		\item {\bf Size3D}: $\bS = <\bL ,\bU> \in \mathbf{R}^3 $,
-		\item {\bf Representation3D}: e.g. a point cloud, a mesh and so on.
-	\end{itemize}
-	
-	The adopted convention is that the pose $\bX$ is assumed to refer to the centroid of the model and that the bounding box $\bS$ is defined by two 3D vectors that specify its "lower" and "upper" corners.
-	
-	\subsection{Property Map}	
-	
-	The semantic information $\cP$ contains the assertions about the properties of the objects in $\cM$:
-	
-	\begin{equation}
-	\cP = \{\bP_1 \cdots \bP_N\},
-	\end{equation}
-	
-	\noindent
-	where each $\bP_i$ is a set of predicates of $arity = (1 \dots q)$ that are instances of $\bm_i$ (corresponding to the geometrical object $\bM_i$).
-	
-	\subsection{Interface}
-	
-	Possible operations on the map are:
-	
-	\begin{itemize}
-		\item query for object: given an object it's possible to check if it's already present in the map
-		\item update object: allows to update an object present in the map with a new observation
-		\item add object: allows to add an object to the map if it's seen for the first time
-		\item render map: builds a 3d model from the collection of objects, this function can be used for navigation and visualization.
-		\item serialize/deserialize: these functions allow to save a map on disk and to load it for later use.
-	\end{itemize}
-	
-	
 	\section{Perception}
 	
-	The perception module takes every frame coming from the RGB-D camera and has to tell which objects are seen by the robot. This information will be passed to the map manager so to update the robot knowledge of the environment.
-	
-	\subsection{Approaches}
-	
+	The perception module takes every frame coming from the RGB-D camera and has to tell which objects are seen by the robot. This information will be passed to the map manager so to update the robot knowledge of the environment. Possible approaches are:
+		
 	\begin{itemize}
 		\item {\bf Geometric only:} consists in recovering only the geometric structure of the environment.
 		\item {\bf Semantic only:} focuses on the extraction of semantic information from sensory data, assuming that no reconstruction is needed.
@@ -159,11 +93,9 @@
 		\item {\bf Joint:} in this approach, perception is formulated as a problem that jointly estimates geometric structure and semantic properties of the environment. 
 	\end{itemize}
 	
-	\section{Recognition}
+	\subsection{Recognition}
 	
-	Extracting semantic information from visual data is one of the  fundamental problems of computer vision. Recognition can be decomposed into sub-tasks, depending on the information one is interested to extract from the input data. These sub-tasks can be organized on a progression that goes from coarse to fine grained inference.
-	
-	\subsection{Approaches}
+	Extracting semantic information from visual data is one of the  fundamental problems of computer vision. Recognition can be decomposed into sub-tasks, depending on the information one is interested to extract from the input data. These sub-tasks can be organized on a progression that goes from coarse to fine grained inference. Possible approaches are:
 	
 	\begin{itemize}
 		\item {\bf Image classification:} assigning a semantic label to an input image from a fixed set of categories.
@@ -174,33 +106,27 @@
 		\item {\bf 3d object detection:} given an input model and a 3d scene, finds the location of the input model inside the scene.
 	\end{itemize}
 	
-	\section{Reconstruction}
+	\subsection{Reconstruction}
 	
 	Building a digital representation of the environment where the robot has to operate, is a well studied problem in both robotics and AI research fields. In literature,  different types of representations have been proposed, as well as different methods to obtain each of them.
-	
-	\subsection{Approaches}
-	
+		
 	\begin{itemize}
 		\item {\bf Metric:} can be used to measure physical quantities in the environment such as distance to obstacles.
 		\item {\bf Topological:} allows the robot to assess the connectivity between places and/or objects in the environment.
 	\end{itemize}
+		
+	\section{Mapping}
 	
-	\section{Map Management}
-	
-	The map manager has the task of incrementally update the semantic map with new information coming from the perception module.
-	
-	\subsection{Approaches}
-	
+	The map manager has the task of incrementally update the semantic map with new information coming from the perception module. Possible approaches are:
+		
 	\begin{itemize}
 		\item {\bf Offline:} the map is built after all sensor measurements have been acquired by the robot while exploring the environment.
 		\item {\bf Frame-by-frame:} the map is built while the robot is exploring the environment and acquiring sensor measurements.
 	\end{itemize}
 	
-	\section{Symbol Grounding}
+	\subsection{Symbol Grounding}
 	
-	The symbol grounding problem consists of linking symbols, obtained from the perception module, to concepts in a Knowledge Base (KB), hence retrieving a notion	of their meanings and functionalities in a given domain. The result of this processing step is an updated map.
-	
-	\subsection{Approaches}
+	The symbol grounding problem consists of linking symbols, obtained from the perception module, to concepts in a Knowledge Base (KB), hence retrieving a notion	of their meanings and functionalities in a given domain. The result of this processing step is an updated map. Possible approaches are:
 	
 	\begin{itemize}
 		\item {\bf Local:} consists in taking the output of the perception module as it is.
@@ -217,8 +143,183 @@
 	\input{survey}
 	
 	\clearpage
+
+	\section{Our Approach}
 	
+	A semantic map is a triple:
+	
+	\begin{equation}
+	\cSM = < \cR, \cM, \cP >,
+	\end{equation}
+	
+	\noindent
+	with:
+		
+	\begin{description}
+		\item {\bf Global Reference System} $\cR$: the reference system is used to express all the elements of the map in a single frame.
+		\item {\bf Metric Map} $\cM$: the metric information $\cM$ of the semantic map can be seen as a collection of 3D geometric models:
+		
+		\begin{equation}
+		\cM = \{\bM_1 \cdots \bM_N\},
+		\end{equation}
+		
+		\noindent	
+		where each model $\bM_i$ is an entity defined by:
+		
+		\begin{itemize}
+			\item {\bf Pose3D}: $\bX = [ \bR | \bt] \in SE(3)$,
+			\item {\bf Size3D}: $\bS = <\bL ,\bU> \in \mathbf{R}^3 $,
+			\item {\bf Representation3D}: e.g. a point cloud, a mesh and so on.
+		\end{itemize}
+		
+		The adopted convention is that the pose $\bX$ is assumed to refer to the centroid of the model and that the bounding box $\bS$ is defined by two 3D vectors that specify its "lower" and "upper" corners.
+		\item {\bf Property Map} $\cP$: the semantic information $\cP$ contains the assertions about the properties of the objects in $\cM$:
+		
+		\begin{equation}
+		\cP = \{\bP_1 \cdots \bP_N\},
+		\end{equation}
+		
+		\noindent
+		where each $\bP_i$ is a set of predicates of $arity = (1 \dots q)$ that are instances of $\bm_i$ (corresponding to the geometrical object $\bM_i$).
+	\end{description}
+	
+
+	\noindent
+	Possible operations on the map are:
+	
+	\begin{itemize}
+		\item query for object: given an object it's possible to check if it's already present in the map
+		\item update object: allows to update an object present in the map with a new observation
+		\item add object: allows to add an object to the map if it's seen for the first time
+		\item render map: builds a 3d model from the collection of objects, this function can be used for navigation and visualization.
+		\item serialize/deserialize: these functions allow to save a map on disk and to load it for later use.
+	\end{itemize}
+	
+	\subsection{Perception}
+
+	Some preliminary notation:
+	
+	\begin{itemize}
+		\item {\bf Image domain}: $\bOmega = \{(u,v) \in \mN^2 \mid u \in [0,height], v \in [0,width]\}$
+		\item {\bf RGB domain}: $\bGamma = \{(r,g,b) \in \mN^3 \mid r \in [0,255], g \in [0,255], b \in [0,255]\}$
+		\item {\bf Depth domain}: $\bDelta = \{ d \in \mR \mid d \in [0,1]\}$
+		\item {\bf Label domain}: $\bLambda = \{ l \in \mN \mid l \in [0,N]\}$
+		\item {\bf Pixel}: $\bx \in \bOmega$
+		\item {\bf RGB image}: $I : \bOmega \rightarrow \bGamma \implies \bx \rightarrow I(\bx)$
+		\item {\bf Depth image}: $D : \bOmega \rightarrow \bDelta \implies \bx \rightarrow D(\bx)$
+		\item {\bf Label image}: $L : \bOmega \rightarrow \bLambda \implies \bx \rightarrow L(\bx)$
+	\end{itemize}
+	
+	\noindent
+	{\bf Recognition:} 
+	finding instances of known class objects in the input image. More formally, given an RGB image $I$ and a set of semantic labels $\cL = \{ l_1 \dots l_N \}$, computes an assignment $L(\bx)$ of labels $l_i$ to each image pixel $\bx$.
+	
+	\noindent
+	{\bf Input: }
+	\begin{itemize}
+		\item {\bf RGB Image}: $I$
+		\item {\bf Semantic Labels}: $\cL$
+	\end{itemize}
+	\noindent
+	{\bf Output: }
+	\begin{itemize}
+		\item {\bf Label Image}: $L$
+	\end{itemize}
+	
+	\noindent
+	{\bf Reconstruction:} 
+	given an initial guess $\cX_0$ regarding a set of variables $\cX = \{\bx_1 \dots \bx_n\}$ (which includes robot trajectory and landmark positions) and a set of sensor measurements $\cZ = \{\bz_1 \dots \bz_m\}$, computes the assignment of variables $\cX^\star$ that maximizes the posterior $p(\cX \mid \cZ)$.
+	
+	\noindent
+	{\bf Input: }
+	\begin{itemize}
+		\item {\bf Initial guess}: $\cX_0$
+		\item {\bf Sensor Measurements}: $\cZ$
+	\end{itemize}
+	\noindent
+	{\bf Output: }
+	\begin{itemize}
+		\item {\bf MAP estimate}: $\cX^\star$
+	\end{itemize}
+	
+	\subsection{Mapping}
+	
+	Given the above definition of semantic map, let 
+	
+	\begin{equation}
+	\bE_i \eq < \bM_i,\bP_i >
+	\end{equation}
+	
+	\noindent
+	denote the $i^{th}$ element of $\cSM$, where: $\bM_i \in \cM$ is the metric component (expressed in $\cR$) and $\bP_i \in \cP$ the semantic properties. 
+	
+	Depending on $\cR$, we consider two different maps. The global map $\cSM^G_t = < \cR^G, \cM^G, \cP^G >$  is the collection of elements $\{ \bE_1^G \dots \bE_N^G \}$ referred to the global reference frame at time $t$. While, the local map $\cSM^L_t = < \cR^L, \cM^L, \cP^L >$ is the collection of elements $\{ \bE_1^L \dots \bE_M^L \}$ referred to the robot reference frame at time $t$. 
+	
+	{\bf Symbol Grounding:}
+	this module is in charge of updating the current belief of the robot about the state of the environment, expressed in $\cSM^G_t$, with the new information contained in $\cSM^L_t$. This is done by first finding the set of correspondences $\cC_t = \{\bc_1 \dots \bc_K\}$ that states which elements in the global map $\cM^G$ correspond to the one observed in the local map $\cM^L$. In particular, the $k$-th correspondence
+	
+	\begin{equation}
+	\bc^{i,j}_k \eq <\bE_i^G,\bE_j^L> 
+	\end{equation}
+	
+	\noindent
+	establishes that the $j^{th}$ element $\bE_j^L$ in the local map is the "closest" (w.r.t. a similarity measure, see below) to the $i^{th}$ element $\bE_i^G$ in the global map. Thus, computing a correspondence $\bc^{i,j}_k$ consists in finding the element $\bE_j^\star$ that satisfies:
+	
+	\begin{equation}
+	\bE_j^\star = \argmin_{\bE_j} \, d(\bE_i^G,\bE_j^L)
+	\end{equation}
+	
+	
+
+	{\bf Input: }
+	\begin{itemize}
+		\item {\bf Global Map}: $\cSM^G_t$
+		\item {\bf Local Map}: $\cSM^L_t$
+	\end{itemize}
+	\noindent
+	{\bf Output: }
+	\begin{itemize}
+		\item {\bf Correspondences}: $\cC_t$	
+		\item {\bf Updated Global Map}: $\cM_{t+1}^G$	
+	\end{itemize}
+	
+
+	\clearpage	
 	\bibliography{references}
 	\bibliographystyle{apalike}
 	
 \end{document}
+
+%	\subsection{Global Reference System}	
+%	
+%	The reference system is used to express all the elements of the map in a single frame.
+%	
+%	\subsection{Metric Map}	
+%	
+%	The metric information $\cM$ of the semantic map can be seen as a collection of 3D geometric models:
+%	
+%	\begin{equation}
+%	\cM = \{\bM_1 \cdots \bM_N\},
+%	\end{equation}
+%	
+%	\noindent	
+%	where each model $\bM_i$ is an entity defined by:
+%	
+%	\begin{itemize}
+%		\item {\bf Pose3D}: $\bX = [ \bR | \bt] \in SE(3)$,
+%		\item {\bf Size3D}: $\bS = <\bL ,\bU> \in \mathbf{R}^3 $,
+%		\item {\bf Representation3D}: e.g. a point cloud, a mesh and so on.
+%	\end{itemize}
+%	
+%	The adopted convention is that the pose $\bX$ is assumed to refer to the centroid of the model and that the bounding box $\bS$ is defined by two 3D vectors that specify its "lower" and "upper" corners.
+%	
+%	\subsection{Property Map}	
+%	
+%	The semantic information $\cP$ contains the assertions about the properties of the objects in $\cM$:
+%	
+%	\begin{equation}
+%	\cP = \{\bP_1 \cdots \bP_N\},
+%	\end{equation}
+%	
+%	\noindent
+%	where each $\bP_i$ is a set of predicates of $arity = (1 \dots q)$ that are instances of $\bm_i$ (corresponding to the geometrical object $\bM_i$).
