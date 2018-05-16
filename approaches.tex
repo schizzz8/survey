@@ -20,6 +20,7 @@
 
 \usepackage{rotating}
 
+\input{notation.tex}
 
 
 %\usepackage{geometry}
@@ -32,12 +33,19 @@
 %	bottom=0mm,
 %}
 
-
+\title{\LARGE \bf Semantic Mapping}
 
 \begin{document}
 	
+	\maketitle
+	
+	\section{Introduction}
+	
+	Acquisition and modeling of semantic information is a key requisite for mobile robots to be deployed in human environments. In this field, fundamental aspects faced by research are: the recognition of places and objects, the construction of semantic models and the exploration strategies to enrich contextual knowledge. 
+	
+	In this paper, we will present relevant work that focused on the mentioned problems, namely, perception, mapping and exploration, along with our system proposal.
 
-	\section{Motivation}
+	\subsection{Motivation}
 	
 	\begin{itemize}
 		\item Traditional mapping techniques return a geometric model of the environment that can be used by the robot for computing distances to obstacles or finding paths toward goals.
@@ -46,7 +54,7 @@
 	\end{itemize}
 	
 		
-	\section{Definition}
+	\subsection{Definition}
 		
 	Semantic mapping:
 		
@@ -56,83 +64,154 @@
 		\item is a core component of many robotic applications.
 	\end{itemize}
 		
-	\section{Building a semantic representation of the environment}
+	\subsection{Building a semantic representation of the environment}
 	
-	The process of semantic mapping consists in integrating sensor measurements in the robot internal representation of the environment.
+	\begin{itemize}
+		\item The process of semantic mapping consists in integrating sensor measurements in the robot internal representation of the environment.
+		\item The output of visual and range sensors is processed to extract meaningful information for recovering the structure and objects/places categories of the scene.
+		\item This information is consecutively used to update the current robot belief about the state of the environment.
+	\end{itemize}
 	
-	The output of visual and range sensors is processed to extract meaningful information for recovering the structure and objects/places categories of the scene.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\linewidth]{pics/drawing-crop.pdf}
+		\caption{Semantic mapping system.}
+		\label{fig:pipeline}
+	\end{figure}
+	
+	\newpage
 		
-	This information is consecutively used to update the current robot belief about the state of the environment.
-	
 	\section{System Overview}
+			
+	A semantic map is a triple:
+	
+	\begin{equation}
+	\cSM = < \cR, \cM, \cP >,
+	\end{equation}
+	
+	\noindent
+	with:
+	
+	\begin{itemize}
+		\item $\cR$: reference system
+		\item $\cM$: metric information obtained from sensors
+		\item $\cP$: predicates compliant with basic concept hierarchy.
+	\end{itemize}
+	
+	\subsection{Global Reference System}	
+	
+	The reference system is used to express all the elements of the map in a single frame.
+	
+	\subsection{Metric Map}	
+	
+	The metric information $\cM$ of the semantic map can be seen as a collection of 3D geometric models:
+	
+	\begin{equation}
+	\cM = \{\bM_1 \cdots \bM_N\},
+	\end{equation}
+	
+	\noindent	
+	where each model $\bM_i$ is an entity defined by:
+	
+	\begin{itemize}
+		\item {\bf Pose3D}: $\bX = [ \bR | \bt] \in SE(3)$,
+		\item {\bf Size3D}: $\bS = <\bL ,\bU> \in \mathbf{R}^3 $,
+		\item {\bf Representation3D}: e.g. a point cloud, a mesh and so on.
+	\end{itemize}
+	
+	The adopted convention is that the pose $\bX$ is assumed to refer to the centroid of the model and that the bounding box $\bS$ is defined by two 3D vectors that specify its "lower" and "upper" corners.
+	
+	\subsection{Property Map}	
+	
+	The semantic information $\cP$ contains the assertions about the properties of the objects in $\cM$:
+	
+	\begin{equation}
+	\cP = \{\bP_1 \cdots \bP_N\},
+	\end{equation}
+	
+	\noindent
+	where each $\bP_i$ is a set of predicates of $arity = (1 \dots q)$ that are instances of $\bm_i$ (corresponding to the geometrical object $\bM_i$).
+	
+	\subsection{Interface}
+	
+	Possible operations on the map are:
+	
+	\begin{itemize}
+		\item query for object: given an object it's possible to check if it's already present in the map
+		\item update object: allows to update an object present in the map with a new observation
+		\item add object: allows to add an object to the map if it's seen for the first time
+		\item render map: builds a 3d model from the collection of objects, this function can be used for navigation and visualization.
+		\item serialize/deserialize: these functions allow to save a map on disk and to load it for later use.
+	\end{itemize}
+	
 	
 	\section{Perception}
 	
+	The perception module takes every frame coming from the RGB-D camera and has to tell which objects are seen by the robot. This information will be passed to the map manager so to update the robot knowledge of the environment.
+	
+	\subsection{Approaches}
+	
 	\begin{itemize}
-		\item pipelined
-		\item geometric only
-		\item semantic only
-		\item parallel
-		\item joint
+		\item {\bf Geometric only:} consists in recovering only the geometric structure of the environment.
+		\item {\bf Semantic only:} focuses on the extraction of semantic information from sensory data, assuming that no reconstruction is needed.
+		\item {\bf Pipelined:} consists in recovering a geometric model of the environment and, subsequently, using this model to extract semantic information.
+		\item {\bf Parallel:} in this approach, reconstruction and recognition are performed separately (and simultaneously) and then, their results are fused together by the symbol grounding module.
+		\item {\bf Joint:} in this approach, perception is formulated as a problem that jointly estimates geometric structure and semantic properties of the environment. 
 	\end{itemize}
 	
 	\section{Recognition}
 	
+	Extracting semantic information from visual data is one of the  fundamental problems of computer vision. Recognition can be decomposed into sub-tasks, depending on the information one is interested to extract from the input data. These sub-tasks can be organized on a progression that goes from coarse to fine grained inference.
+	
+	\subsection{Approaches}
+	
 	\begin{itemize}
-		\item image classification
-		\item object detection
-		\item image segmentation
-		\item scene labeling
-		\item 3d object recognition
-		\item 3d object detection
+		\item {\bf Image classification:} assigning a semantic label to an input image from a fixed set of categories.
+		\item {\bf Object detection:} making a prediction not only of object categories but also of their spatial locations.
+		\item {\bf Image segmentation:} finding groups of pixels that possess some "similarity" among each other.
+		\item {\bf Scene labeling:} assigning a semantic label to each geometric feature of the scene.
+		\item {\bf 3d object recognition:} given an input model and a models database, finds the model in the database that best matches with the input.
+		\item {\bf 3d object detection:} given an input model and a 3d scene, finds the location of the input model inside the scene.
 	\end{itemize}
 	
 	\section{Reconstruction}
 	
+	Building a digital representation of the environment where the robot has to operate, is a well studied problem in both robotics and AI research fields. In literature,  different types of representations have been proposed, as well as different methods to obtain each of them.
+	
+	\subsection{Approaches}
+	
 	\begin{itemize}
-		\item metric
-		\item topological
+		\item {\bf Metric:} can be used to measure physical quantities in the environment such as distance to obstacles.
+		\item {\bf Topological:} allows the robot to assess the connectivity between places and/or objects in the environment.
 	\end{itemize}
 	
 	\section{Map Management}
 	
-	\begin{itemize}
-		\item offline
-		\item frame-by-frame
-	\end{itemize}
+	The map manager has the task of incrementally update the semantic map with new information coming from the perception module.
 	
-	\section{Matching}
+	\subsection{Approaches}
 	
 	\begin{itemize}
-		\item ...
+		\item {\bf Offline:} the map is built after all sensor measurements have been acquired by the robot while exploring the environment.
+		\item {\bf Frame-by-frame:} the map is built while the robot is exploring the environment and acquiring sensor measurements.
 	\end{itemize}
-
+	
 	\section{Symbol Grounding}
 	
+	The symbol grounding problem consists of linking symbols, obtained from the perception module, to concepts in a Knowledge Base (KB), hence retrieving a notion	of their meanings and functionalities in a given domain. The result of this processing step is an updated map.
+	
+	\subsection{Approaches}
+	
 	\begin{itemize}
-		\item context aware
-		\item bayesian
-		\item local
+		\item {\bf Local:} consists in taking the output of the perception module as it is.
+		\item {\bf Bayesian:} the grounding of a symbol considers also past categorizations.
+		\item {\bf Context aware:} the grounding of a symbol considers also spatial relations with other symbols.
 	\end{itemize}
 	
 	\section{Action}
 	
-	\begin{itemize}
-		\item ...
-	\end{itemize}
+	The action module has the task of navigating the robot in a way to improve its current knowledge of the environment. To do so, it receives the current belief of the problem state, i.e. map and robot pose, and plans a motion trajectory that maximizes some cost function based on different criteria, e.g., navigation cost, information cost, and so on.
 	
-	\section{Active Vision}
-	
-	\begin{itemize}
-		\item ...
-	\end{itemize}
-	
-	\section{Exploration}
-	
-	\begin{itemize}
-		\item ...
-	\end{itemize}
-		
 	\clearpage
 	
 	\input{survey}
