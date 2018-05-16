@@ -270,7 +270,16 @@
 	\end{equation}
 	
 	
-
+	
+	Then, according to $d(\bE_i^G,\bE_j^L)$, it's possible to perform two operations to update of the map:
+	
+	 \begin{itemize}
+	 	\item $d(\bE_i^G,\bE_j^L) \leq d_{th}$: $\bE_j^L$ matches with $\bE_i^G$ $\rightarrow$ Merge the two elements
+	 	\item $d(\bE_i^G,\bE_j^L) > d_{th}$: $\bE_j^L$ has not been already seen $\rightarrow$ Add the element to the map
+	 \end{itemize}
+	
+	
+	\noindent
 	{\bf Input: }
 	\begin{itemize}
 		\item {\bf Global Map}: $\cSM^G_t$
